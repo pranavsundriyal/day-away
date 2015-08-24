@@ -18,7 +18,7 @@ public class HelloController {
     @RequestMapping("/")
     public String index(@RequestParam(value="query", required=false, defaultValue="ORD-BOM")String query, Model model) throws IOException{
         List<PriceDateModel> priceDateModels = new ArrayList<PriceDateModel>();
-        CsvReader reader = new CsvReader(new FileReader("/Users/psundriyal/Desktop/DayAway/gs-spring-boot/day-away/src/main/java/Controller/ORD-BOM-DEC.csv"), ',' );
+        CsvReader reader = new CsvReader(new FileReader("/Users/psundriyal/Desktop/DayAway/day-away/src/main/java/Controller/ORD-BOM-DEC.csv"), ',' );
         reader.readHeaders();
         while (reader.readRecord())
         {
