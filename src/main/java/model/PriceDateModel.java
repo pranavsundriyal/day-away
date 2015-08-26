@@ -4,11 +4,15 @@ package model;
  * Created by psundriyal on 8/23/15.
  */
 public class PriceDateModel {
-    public String getPrice() {
+    int daysOut;
+    float price;
+    String date;
+
+    public Float getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(Float price) {
         this.price = price;
     }
 
@@ -20,11 +24,23 @@ public class PriceDateModel {
         this.date = date;
     }
 
-    String price;
-    String date;
 
-    public PriceDateModel(String price, String date) {
+    public void setPrice(float price) {
+        this.price = price;
+    }
+
+    public int getDaysOut() {
+        return daysOut;
+    }
+
+    public void setDaysOut(int daysOut) {
+        this.daysOut = daysOut;
+    }
+
+
+    public PriceDateModel(Float price, String date, int daysOut) {
         this.price = price;
         this.date = date;
+        this.daysOut =daysOut;
     }
 }

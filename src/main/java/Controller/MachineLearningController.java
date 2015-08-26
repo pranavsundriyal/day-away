@@ -1,11 +1,18 @@
 package Controller;
 
 import com.csvreader.CsvReader;
+import model.AggregateModel;
 import model.PriceDateModel;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.SpringApplication;
+import org.springframework.context.ApplicationContext;
+import org.springframework.core.io.Resource;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import util.Util;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -17,21 +24,19 @@ import java.util.List;
  */
 @RestController
 public class MachineLearningController {
+    @Autowired
+    private ApplicationContext ctx;
+
 
     @RequestMapping("/getData")
     public @ResponseBody
-    List getData(String name, Model model) throws IOException{
+    AggregateModel getData(@RequestParam(value="query", required=false, defaultValue="")String query, Model model) throws IOException{
         List<PriceDateModel> priceDateModels = new ArrayList<PriceDateModel>();
-        CsvReader reader = new CsvReader(new FileReader("/Users/psundriyal/Desktop/DayAway/gs-spring-boot/day-away/src/main/java/Controller/ORD-BOM-DEC.csv"), ',' );
-        reader.readHeaders();
-        while (reader.readRecord())
-        {
-            String price = reader.get("Price");
-            String date = reader.get("Date");
-            priceDateModels.add(new PriceDateModel(price,date));
-        }
+        System.out.print(query);
+        Util util = new Util();
+        priceDateModels = util.getModel(query);
         //todo use priceDateModels as sample set to compute other data points and them to model
-        return priceDateModels;
+        return util.createAggregateModels(priceDateModels);
 
     }
 }
