@@ -27,6 +27,9 @@
         for (i = 0; i < pricedata.length; i++) {
             input[i][0] = pricedata[i].date;
             input[i][1] = pricedata[i].price;
+            input[i][2] = aggregateModel.upperPriceLimit;
+            input[i][3] = aggregateModel.averagePrice;
+            input[i][4] = aggregateModel.lowerPriceLimit
         }
      /*]]>*/
   </script>
@@ -39,9 +42,11 @@
     function drawChart() {
 
       var data = new google.visualization.DataTable();
-      data.addColumn('string', 'Days');
+      data.addColumn('string', 'Dates');
       data.addColumn('number', 'Price');
-
+      data.addColumn('number', 'High Price');
+      data.addColumn('number', 'Good Price');
+      data.addColumn('number', 'Great Price')
       data.addRows(input);
 
       var options = {
