@@ -12,7 +12,9 @@ public class AggregateModel {
     float medianPrice;
     float lowerPriceLimit;
     float upperPriceLimit;
+    float meanDeviation;
     boolean buyToday;
+    String query;
 
     public AggregateModel(List<PriceDateModel> priceDateModels) {
         this.priceDateModels = priceDateModels;
@@ -73,6 +75,25 @@ public class AggregateModel {
     public void setBuyToday(boolean buyToday) {
         this.buyToday = buyToday;
     }
+
+    public void setUpperPriceLimit(float upperPriceLimit) {
+        this.upperPriceLimit = upperPriceLimit;
+    }
+    public String getQuery() {
+        return query;
+    }
+    public void setQuery(String query) {
+        this.query = query;
+    }
+
+    public float getMeanDeviation() {
+        return meanDeviation;
+    }
+
+    public void setMeanDeviation(float meanDeviation) {
+        this.meanDeviation = meanDeviation;
+    }
+
 
 
 

@@ -4,7 +4,6 @@ package model;
  * Created by psundriyal on 8/23/15.
  */
 public class PriceDateModel {
-    int daysOut;
     float price;
     String date;
 
@@ -23,24 +22,11 @@ public class PriceDateModel {
     public void setDate(String date) {
         this.date = date;
     }
-
-
     public void setPrice(float price) {
         this.price = price;
     }
-
-    public int getDaysOut() {
-        return daysOut;
-    }
-
-    public void setDaysOut(int daysOut) {
-        this.daysOut = daysOut;
-    }
-
-
-    public PriceDateModel(Float price, String date, int daysOut) {
+    public PriceDateModel(Float price, String date) {
         this.price = price;
         this.date = date;
-        this.daysOut =daysOut;
     }
 }

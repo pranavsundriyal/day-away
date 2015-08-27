@@ -36,7 +36,10 @@ public class MachineLearningController {
         Util util = new Util();
         priceDateModels = util.getModel(query);
         //todo use priceDateModels as sample set to compute other data points and them to model
-        return util.createAggregateModels(priceDateModels);
-
+        if (priceDateModels.size() == 0 || query== null){
+            return null;
+        }
+        else
+            return util.createAggregateModels(priceDateModels,query);
     }
 }

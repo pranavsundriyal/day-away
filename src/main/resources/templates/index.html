@@ -2,58 +2,88 @@
       xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <script type="text/javascript"
-            src="https://www.google.com/jsapi?autoload={
-            'modules':[{
-              'name':'visualization',
-              'version':'1',
-              'packages':['corechart']
-            }]
-          }"></script>
 
-    <script src="js/jquery-2.1.4.min.js"></script>
-    <script th:inline="javascript">
-        var data = [[${priceDateModels}]];
-        console.log(data);
-         var input = [];
-        for(var i in data) {
-            input.push([data[i].price, data[i].date]);
+    <style>
+        table, th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
         }
+        th, td {
+        padding: 5px;
+        text-align: left;
+        }
+    </style>
+    <script src="/js/jquery-2.1.4.min.js"></script>
+    <script th:inline="javascript">
+    /*<![CDATA[*/
+        var aggregateModel = [[${aggregateModel}]];
+        var pricedata = aggregateModel.priceDateModels
+        console.log(pricedata);
+        var input = [];
+        var i;
+        for (i = 0; i < pricedata.length; i++) {
+            input[i] = [];
+        }
+        for (i = 0; i < pricedata.length; i++) {
+            input[i][0] = pricedata[i].date;
+            input[i][1] = pricedata[i].price;
+        }
+     /*]]>*/
   </script>
 
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script type="text/javascript">
-      google.setOnLoadCallback(drawChart);
+    google.load('visualization', '1.1', {packages: ['line']});
+    google.setOnLoadCallback(drawChart);
 
-      function drawChart() {
-        var data = google.visualization.arrayToDataTable([
-          ['Year', 'Sales', 'Expenses'],
-          ['2004',  1000,      400],
-          ['2005',  1170,      460],
-          ['2006',  660,       1120],
-          ['2007',  1030,      540]
-        ]);
+    function drawChart() {
 
-        var options = {
-          title: 'Company Performance',
-          curveType: 'function',
-          legend: { position: 'bottom' }
-        };
+      var data = new google.visualization.DataTable();
+      data.addColumn('string', 'Days');
+      data.addColumn('number', 'Price');
 
-        var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+      data.addRows(input);
 
-        chart.draw(data, options);
-      }
-    </script>
+      var options = {
+        chart: {
+          title: 'price vs day',
+          subtitle: 'in dollars (USD)'
+        },
+        width: 900,
+        height: 500
+      };
+
+      var chart = new google.charts.Line(document.getElementById('linechart_material'));
+
+      chart.draw(data, options);
+    }
+  </script>
 </head>
 <body>
-<div id="curve_chart" style="width: 900px; height: 500px"></div>
+<div id="linechart_material"></div>
 <div>
-    <table>
-        <tr th:each="priceDateModels : ${priceDateModels}">
-            <td th:text="${priceDateModels.price}">price</td>
-            <td th:text="${priceDateModels.date}">date</td>
+    <table style="width:100%">
+        <caption>GOOD DAY TO BOOK TICKET FOR <bold th:text="${aggregateModel.query}"></bold></caption>
+        <tr>
+            <th>LOWEST PRICE</th>
+            <th>AVERAGE PRICE</th>
+            <th>MEDIAN PRICE</th>
+            <th>GOOD LOWER LIMIT</th>
+            <th>GOOD HIGHER LIMIT</th>
+            <th>BUY TODAY</th>
+            <th>MEAN DEVIATION</th>
+        </tr>
+        <tr>
+            <td th:text="${aggregateModel.lowestPrice}">1</td>
+            <td th:text="${aggregateModel.averagePrice}">1</td>
+            <td th:text="${aggregateModel.medianPrice}">1</td>
+            <td th:text="${aggregateModel.lowerPriceLimit}">1</td>
+            <td th:text="${aggregateModel.upperPriceLimit}">1</td>
+            <td th:text="${aggregateModel.buyToday}">1</td>
+            <td th:text="${aggregateModel.meanDeviation}">1</td>
         </tr>
     </table>
+
 </div>
 </body>
 </html>
