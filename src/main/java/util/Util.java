@@ -45,7 +45,7 @@ public class Util {
         aggregateModel.setMeanDeviation(calculateMeanDeviation(priceDateModels, aggregateModel.getAveragePrice()));
         aggregateModel.setLowerPriceLimit(aggregateModel.getAveragePrice() - aggregateModel.getMeanDeviation());
         aggregateModel.setUpperPriceLimit(aggregateModel.getAveragePrice() + aggregateModel.getMeanDeviation());
-        if (aggregateModel.getUpperPriceLimit()> aggregateModel.getPriceDateModels().get(aggregateModel.getPriceDateModels().size()-1).getPrice())
+        if (aggregateModel.getAveragePrice() > aggregateModel.getPriceDateModels().get(aggregateModel.getPriceDateModels().size()-1).getPrice())
             aggregateModel.setBuyToday(true);
         return aggregateModel;
     }
